@@ -4,17 +4,19 @@ import {
   ValidationArguments,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class IsEmailUnique implements ValidatorConstraintInterface {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {
+    console.log('====>PrismaService injected:', !!prisma);
+  }
 
   async validate(email: string): Promise<boolean> {
-    console.log('Checking user existence:', email);
+    console.log('Checking user existence===>:', email);
     const user = await this.prisma.user.findUnique({ where: { email } });
-    console.log('Found user:', user);
+    console.log('=======>>Found user:', user);
     return !user; // Email считается уникальным, если пользователя нет
 
     // try {
