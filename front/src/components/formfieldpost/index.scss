@@ -1,0 +1,15 @@
+.formpost {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__field{
+    font-size: 14px;
+  line-height: 1.3em;
+  flex-grow: 1;
+  }
+
+  &__button{
+
+  }
+}

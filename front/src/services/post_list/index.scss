@@ -1,0 +1,13 @@
+.postlist {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    
+  }
+
+  .posthead {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }

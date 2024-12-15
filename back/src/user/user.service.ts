@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-// import { PrismaService } from '../prisma.service';
 import { User, Prisma } from '@prisma/client';
-// import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
