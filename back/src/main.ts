@@ -14,6 +14,20 @@ async function bootstrap() {
   );
   const port = process.env.PORT || 4000;
   await app.listen(port);
+
+  // Логирование маршрутов
+  // const server = app.getHttpAdapter().getInstance();
+  // const logger = new Logger('Bootstrap');
+  // server._router.stack.forEach((middleware) => {
+  //   if (middleware.route) {
+  //     const route = middleware.route;
+  //     logger.log(`Route: ${route.stack[0].method.toUpperCase()} ${route.path}`);
+  //   }
+  // });
+
   console.log(`Server running on http://localhost:${port}`);
 }
 bootstrap();
+function cors(): any {
+  throw new Error('Function not implemented.');
+}

@@ -3,29 +3,28 @@ import "./index.scss";
 import React, { Fragment } from "react";
 // import { AuthContext } from "../../App";
 import Title from "components/title";
-import BackButton from "components/back-button";
+// import BackButton from "components/back-button";
 import PostCreate from "services/post_create";
-;
-
 export const PostList: React.FC = () => {
   // const auth = useContext(AuthContext);
 
-  const handleChenge = () => console.log("sdfegrg")
+  const handleChange = () => console.log("handleChange in post_pist");
   return (
     <>
       <Title title="Home" desctiption="Please enter your text" />
-      
+
       <div className="postlist">
-      <BackButton />
-      
-      <PostCreate
-            onCreate ={handleChenge}
-            placeholder="What is happening?!"
-            button="Submit"
-          />  
-          <Fragment>
+        {/* <BackButton /> */}
+
+        <PostCreate
+          onCreate={handleChange}
+          placeholder="What is happening?!"
+          button="Submit"
+        />
+        <Fragment>
+          <div className="postItem">
             Тут Список постов
-          {/* {data.isEmpty ? (
+            {/* {data.isEmpty ? (
             <Alert message="Список постів пустий" />
           ) : (
             data.list.map((item) => (
@@ -34,9 +33,9 @@ export const PostList: React.FC = () => {
               </Fragment>
             ))
           )} */}
-        </Fragment>    
+          </div>
+        </Fragment>
       </div>
-      
     </>
   );
 };

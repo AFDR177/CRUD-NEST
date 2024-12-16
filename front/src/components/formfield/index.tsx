@@ -1,20 +1,24 @@
-import './index.scss'
-import React, { useReducer } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { ERR_FIELD, NAME_FIELD, REG_EXP_EMAIL } from 'models/const'
+import "./index.scss";
+import React, { useReducer } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ERR_FIELD, NAME_FIELD, REG_EXP_EMAIL } from "models/const";
 import { ACTION_TYPE, initialState, reducer } from "../../utils/reducer";
-import {FormFieldProps} from "../../models/type"
+import { FormFieldProps } from "../../models/type";
 import Button from "../button";
 import Alert from "../alert";
 
-
-
-
-export default function FormField({ email, name, button, alert, link, questionOff, question  }: FormFieldProps) {
-    const navigate = useNavigate();
+export default function FormField({
+  email,
+  name,
+  button,
+  alert,
+  link,
+  questionOff,
+  question,
+}: FormFieldProps) {
+  const navigate = useNavigate();
   const location = useLocation();
-  const {  EMAIL, NAME_USER } = NAME_FIELD;
-  
+  const { EMAIL, NAME_USER } = NAME_FIELD;
 
   //Достать state из useReducer
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -24,7 +28,7 @@ export default function FormField({ email, name, button, alert, link, questionOf
 
   //Достать данные из поля ввода
   const handleChange = (name: string, value: string) => {
-    console.log(name, value, value.length);
+    // console.log(name, value, value.length);
     dispatch({
       type: ACTION_TYPE.SET_FORM_VAL,
       payload: {
@@ -53,11 +57,9 @@ export default function FormField({ email, name, button, alert, link, questionOf
     }
 
     if (name.length > 40) {
-       
-        err[NAME_USER] = ERR_FIELD.IS_BIG;
-      }  
-      console.log("err-2", err);
-
+      err[NAME_USER] = ERR_FIELD.IS_BIG;
+    }
+    console.log("err-2", err);
 
     dispatch({ type: ACTION_TYPE.SEN_FORM_ERR, payload: err });
 
@@ -75,7 +77,6 @@ export default function FormField({ email, name, button, alert, link, questionOf
         submitSignUp();
       } else if (location.pathname === "/signin") {
         console.log("enter in signin");
-        
 
         // submitSignIn();
       }
@@ -90,10 +91,9 @@ export default function FormField({ email, name, button, alert, link, questionOf
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            [EMAIL]: state.formValues[EMAIL],
-            [NAME_USER]: state.formValues[NAME_USER]
-            
-          })
+          [EMAIL]: state.formValues[EMAIL],
+          [NAME_USER]: state.formValues[NAME_USER],
+        }),
       });
       //Получаю данные из router '/signup'
       //message и session
@@ -114,7 +114,7 @@ export default function FormField({ email, name, button, alert, link, questionOf
         //   // console.log("next page====>");
         // }
 
-        navigate("/signup-confirm");
+        navigate("/post");
         window.scrollTo(0, 0);
       }
 
@@ -130,13 +130,12 @@ export default function FormField({ email, name, button, alert, link, questionOf
     }
   };
 
-//   const convertData = () => {
-//     return JSON.stringify({
-//       [EMAIL]: state.formValues[EMAIL],
-      
-//     });
-//   };
+  //   const convertData = () => {
+  //     return JSON.stringify({
+  //       [EMAIL]: state.formValues[EMAIL],
 
+  //     });
+  //   };
 
   return (
     <div className="form">
@@ -149,12 +148,12 @@ export default function FormField({ email, name, button, alert, link, questionOf
             Your Name:
           </label>
           <input
-          id = "name"
+            id="name"
             type="text"
             name={NAME_USER}
             placeholder="Enter your name"
             className={`field__input ${
-                errorName ? "field__input--validation" : ""
+              errorName ? "field__input--validation" : ""
             }`}
             onChange={(e) => handleChange(NAME_USER, e.target.value)}
             required
@@ -171,8 +170,8 @@ export default function FormField({ email, name, button, alert, link, questionOf
           >
             Email:
           </label>
-          <input 
-          id="email"
+          <input
+            id="email"
             type="email"
             name={EMAIL}
             placeholder="Enter your email"
@@ -186,10 +185,6 @@ export default function FormField({ email, name, button, alert, link, questionOf
         </div>
       ) : null}
 
-      
-
-     
-
       {questionOff ? (
         <p className="have-acc">
           {`${question} `}
@@ -202,5 +197,5 @@ export default function FormField({ email, name, button, alert, link, questionOf
       </Button>
       {alert ? <Alert text={state.alert} /> : null}
     </div>
-  )
+  );
 }
