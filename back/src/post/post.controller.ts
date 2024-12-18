@@ -14,16 +14,17 @@ import { PostService } from './post.service';
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @Get('/:id') // Получить один пост по егоid
-  async getPostById(@Param('id') id: string): Promise<PostModel> {
-    return this.postService.post({ id: Number(id) });
-  }
-
   @Get('/feed') //Получить все опубликованные посты
   async getPublishedPosts(): Promise<PostModel[]> {
-    return this.postService.posts({
-      where: { published: true },
-    });
+    console.log('======>getPublishedPosts called');
+    try {
+      return this.postService.posts({
+        where: { published: true },
+      });
+    } catch (error) {
+      console.error('Error while getting posts:', error);
+      throw error; // Пробрасываем ошибку
+    }
   }
 
   @Get('filtered-posts/:searchString') //Фильтровать сообщения по title или content
@@ -42,6 +43,11 @@ export class PostController {
         ],
       },
     });
+  }
+
+  @Get('/:id') // Получить один пост по егоid
+  async getPostById(@Param('id') id: string): Promise<PostModel> {
+    return this.postService.post({ id: Number(id) });
   }
 
   @Post()

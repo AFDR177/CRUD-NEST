@@ -19,13 +19,17 @@ let PostController = class PostController {
     constructor(postService) {
         this.postService = postService;
     }
-    async getPostById(id) {
-        return this.postService.post({ id: Number(id) });
-    }
     async getPublishedPosts() {
-        return this.postService.posts({
-            where: { published: true },
-        });
+        console.log('======>getPublishedPosts called');
+        try {
+            return this.postService.posts({
+                where: { published: true },
+            });
+        }
+        catch (error) {
+            console.error('Error while getting posts:', error);
+            throw error;
+        }
     }
     async getFilteredPosts(searchString) {
         return this.postService.posts({
@@ -41,8 +45,10 @@ let PostController = class PostController {
             },
         });
     }
+    async getPostById(id) {
+        return this.postService.post({ id: Number(id) });
+    }
     async createDraft(postData) {
-        console.log('===>postData', postData);
         const { title, content, authorEmail } = postData;
         return this.postService.createPost({
             title,
@@ -64,13 +70,6 @@ let PostController = class PostController {
 };
 exports.PostController = PostController;
 __decorate([
-    (0, common_1.Get)('/:id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], PostController.prototype, "getPostById", null);
-__decorate([
     (0, common_1.Get)('/feed'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -83,6 +82,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "getFilteredPosts", null);
+__decorate([
+    (0, common_1.Get)('/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "getPostById", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

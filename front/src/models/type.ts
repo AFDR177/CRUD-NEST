@@ -44,12 +44,16 @@ export interface FormFieldProps {
 }
 
 export interface PostCreateProps {
-  onCreate: () => void;
+  onCreate: (newPost: Post) => void;
   placeholder: string;
   button: string;
 }
 
 export interface FormFieldPostProps {
+  title: string;
+  content: string;
+  onTitleChange: any;
+  onContentChange: any;
   onSubmit: any;
   placeholder: string;
   button: string;
@@ -60,4 +64,20 @@ export interface FieldForTitleProps {
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+}
+
+export interface PostItemProps {
+  id: number;
+  title: string;
+  content: string;
+  authorEmail: string;
+}
+
+export interface Post {
+  id: number;
+  author: { name: string; email: string };
+
+  title: string;
+  content: string;
+  authorEmail: string;
 }

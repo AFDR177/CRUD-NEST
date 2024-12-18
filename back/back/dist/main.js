@@ -10,14 +10,6 @@ async function bootstrap() {
     app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
     const port = process.env.PORT || 4000;
     await app.listen(port);
-    const server = app.getHttpAdapter().getInstance();
-    const logger = new common_1.Logger('Bootstrap');
-    server._router.stack.forEach((middleware) => {
-        if (middleware.route) {
-            const route = middleware.route;
-            logger.log(`Route: ${route.stack[0].method.toUpperCase()} ${route.path}`);
-        }
-    });
     console.log(`Server running on http://localhost:${port}`);
 }
 bootstrap();

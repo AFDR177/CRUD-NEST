@@ -95,8 +95,7 @@ export default function FormField({
           [NAME_USER]: state.formValues[NAME_USER],
         }),
       });
-      //Получаю данные из router '/signup'
-      //message и session
+
       const data = await res.json();
 
       console.log("data========>>>", data);
