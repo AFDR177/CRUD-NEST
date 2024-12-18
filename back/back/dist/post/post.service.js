@@ -17,23 +17,40 @@ let PostService = class PostService {
         this.prisma = prisma;
     }
     async post(postWhereUniqueInput) {
+        console.log('=======>PostWhereUniqueInput:', postWhereUniqueInput);
         return this.prisma.post.findUnique({
             where: postWhereUniqueInput,
         });
     }
     async posts(params) {
         const { skip, take, cursor, where, orderBy } = params;
-        return this.prisma.post.findMany({
+        console.log('=====> Params for posts query:', {
             skip,
             take,
             cursor,
             where,
             orderBy,
         });
+        try {
+            return this.prisma.post.findMany({
+                skip,
+                take,
+                cursor,
+                where,
+                orderBy,
+            });
+        }
+        catch (error) {
+            console.error('Error while fetching posts:', error);
+            throw error;
+        }
     }
     async createPost(data) {
         return this.prisma.post.create({
             data,
+            include: {
+                author: true,
+            },
         });
     }
     async updatePost(params) {

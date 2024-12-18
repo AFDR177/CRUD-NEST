@@ -12,6 +12,8 @@ export class PostService {
     //и выдает эту запись (данном случае выдает id Post)
     postWhereUniqueInput: Prisma.PostWhereUniqueInput,
   ): Promise<Post | null> {
+    console.log('=======>PostWhereUniqueInput:', postWhereUniqueInput);
+
     return this.prisma.post.findUnique({
       where: postWhereUniqueInput,
     });
@@ -27,18 +29,33 @@ export class PostService {
     orderBy?: Prisma.PostOrderByWithRelationInput;
   }): Promise<Post[]> {
     const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.post.findMany({
+    console.log('=====> Params for posts query:', {
       skip,
       take,
       cursor,
       where,
       orderBy,
     });
+    try {
+      return this.prisma.post.findMany({
+        skip,
+        take,
+        cursor,
+        where,
+        orderBy,
+      });
+    } catch (error) {
+      console.error('Error while fetching posts:', error);
+      throw error; // Пробрасываем ошибку дальше
+    }
   }
 
   async createPost(data: Prisma.PostCreateInput): Promise<Post> {
     return this.prisma.post.create({
       data,
+      include: {
+        author: true, // Включает данные автора
+      },
     });
   }
 

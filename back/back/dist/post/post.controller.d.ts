@@ -3,9 +3,9 @@ import { PostService } from './post.service';
 export declare class PostController {
     private readonly postService;
     constructor(postService: PostService);
-    getPostById(id: string): Promise<PostModel>;
     getPublishedPosts(): Promise<PostModel[]>;
     getFilteredPosts(searchString: string): Promise<PostModel[]>;
+    getPostById(id: string): Promise<PostModel>;
     createDraft(postData: {
         title: string;
         content?: string;
