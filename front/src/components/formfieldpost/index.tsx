@@ -5,6 +5,7 @@ import { FormFieldPostProps } from "../../models/type";
 import Button from "components/button";
 import BackButton from "components/back-button";
 import FieldForTitle from "components/fieldForTitle";
+import Grid from "components/grid";
 
 export default function FormFieldPost({
   title,
@@ -22,49 +23,39 @@ export default function FormFieldPost({
   // const handleChangeContent = (
   //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   // ) => setContent(e.target.value);
-
+  const handleChangeContent = (e: any) => onContentChange(e.target.value);
+  const handleChangeTitle = (e: any) => onTitleChange(e.target.value);
   // const handleChangeTitle = (
   //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   // ) => setTitle(e.target.value);
 
-  // const handleSubmit = () => {
-  //   // console.log("title==>", title, "content==>", content);
-  //   if (content.length === 0) return null;
+  const handleSubmit = () => {
+    // console.log("title==>", title, "content==>", content);
+    if (content.length === 0) return null;
 
-  //   if (content.length > 0 && title.length > 0) {
-  //     onSubmit({ title, content }); // Передаём данные в родительский компонент
-  //   } else if (content.length > 0 && title.length === 0) {
-  //     onSubmit({ title: "Без названия", content });
-  //   } else {
-  //     console.log("заполни поля");
-  //     // throw new Error("Заполнить все поля");
-  //   }
-  // };
+    if (content.length > 0 && title.length > 0) {
+      onSubmit({ title, content }); // Передаём данные в родительский компонент
+    } else if (content.length > 0 && title.length === 0) {
+      onSubmit({ title: "Без названия", content });
+    } else {
+      // console.log("заполни поля");
+      throw new Error("Заполнить все поля");
+    }
+  };
 
   const isDisabled = content.length === 0;
 
   return (
-    <div className="formpostlist">
-      <BackButton />
+    <Grid>
+      <div className="formpost">
+        <FieldForTitle title={true} onChange={handleChangeTitle} />
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmit();
-        }}
-        className="formpost"
-      >
-        <div className="formpostlist">
-          <FieldForTitle
-            title={true}
-            onChange={(e) => onTitleChange(e.target.value)}
-          />
-
+        <div className="formpost__content">
           <label htmlFor="title" className="field__label">
             Text:
           </label>
           <textarea
-            onChange={(e) => onContentChange(e.target.value)}
+            onChange={handleChangeContent}
             value={content}
             rows={4}
             placeholder={placeholder}
@@ -72,14 +63,17 @@ export default function FormFieldPost({
           ></textarea>
         </div>
 
-        <Button
-          // onClick={handleSubmit}
-          disabled={isDisabled}
-          className="button button--primary"
-        >
-          {button}
-        </Button>
-      </form>
-    </div>
+        <div className="buttons">
+          <BackButton />
+          <Button
+            onClick={handleSubmit}
+            disabled={isDisabled}
+            className="button_kvadrat button--primary"
+          >
+            {button}
+          </Button>
+        </div>
+      </div>
+    </Grid>
   );
 }

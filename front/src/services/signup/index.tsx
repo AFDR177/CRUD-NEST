@@ -13,34 +13,33 @@ export const Signup: React.FC = () => {
 
   return (
     <Grid>
-    <Box>
-      
-      
-      <Title title="Registration" desctiption="Введите данные для регистрации" />
-      
-      <div className="page_name">
-      <BackButton />
-      <FormField
-        button="Continue"
-        name = {true}
-        email={true}
-        alert={true}
-        // pass={true}
-        // textField={false}
-        // text="Code"
-        question="Already have an account?"
-        link={
-          <a href="/signin" className="feild__link-signin">
-            Sign In
-          </a>
-        }
-        questionOff={true}
-        
-        // auth={auth}
-      />
-      </div>
-      
-    </Box>
+      <Box>
+        <Title
+          title="Registration"
+          desctiption="Введите данные для регистрации"
+        />
+        <div className="page_name">
+          <BackButton />
+          <FormField
+            button="Continue"
+            name={true}
+            email={true}
+            alert={true}
+            // pass={true}
+            // textField={false}
+            // text="Code"
+            question="Already have an account?"
+            link={
+              <a href="/signin" className="feild__link-signin">
+                Sign In
+              </a>
+            }
+            questionOff={true}
+
+            // auth={auth}
+          />
+        </div>
+      </Box>
     </Grid>
   );
 };

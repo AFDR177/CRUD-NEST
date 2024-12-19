@@ -129,7 +129,7 @@ export default function FormField({
     }
   };
 
-  const submitSignIn  = async()=>{
+  const submitSignIn = async () => {
     try {
       // Отправляем данные на сервер для входа
       const res = await fetch("/signin", {
@@ -150,7 +150,9 @@ export default function FormField({
         console.error("Ошибка:", data.message);
         dispatch({
           type: ACTION_TYPE.SET_ALERT, // Показываем сообщение в алерте
-          payload: data.message || "Такого пользователя нет в базе, зарегистрируйтесь.",
+          payload:
+            data.message ||
+            "Такого пользователя нет в базе, зарегистрируйтесь.",
         });
       }
     } catch (e: any) {
@@ -160,7 +162,7 @@ export default function FormField({
         payload: "Ошибка подключения к серверу. Попробуйте позже.",
       });
     }
-  }
+  };
 
   return (
     <div className="form">
@@ -217,7 +219,7 @@ export default function FormField({
         </p>
       ) : null}
 
-      <Button onClick={handleSubmit} className="button button--primary">
+      <Button onClick={handleSubmit} className="button_kvadrat button--primary">
         {button}
       </Button>
       {alert ? <Alert text={state.alert} /> : null}

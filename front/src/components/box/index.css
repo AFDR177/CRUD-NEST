@@ -1,6 +1,10 @@
 .box {
-  width: 100%;
+  max-width: 100%;
 
   border: 1px solid #e6e6e6;
   padding: 20px;
+}
+.box--big {
+  width: 980px;
+  border: 2px solid #f8f6f6;
 }
