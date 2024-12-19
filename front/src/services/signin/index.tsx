@@ -5,13 +5,15 @@ import React from "react";
 import Title from "components/title";
 import BackButton from "components/back-button";
 import FormField from "components/formfield";
+import Grid from "components/grid";
+import Box from "components/box";
 
 export const Signin: React.FC = () => {
   // const auth = useContext(AuthContext);
 
   return (
-    <>
-      
+    <Grid>
+      <Box>
       
       <Title title="Entrance" desctiption="Please enter your login details" />
       
@@ -36,8 +38,8 @@ export const Signin: React.FC = () => {
         // auth={auth}
       />
       </div>
-      
-    </>
+      </Box>
+      </Grid>
   );
 };
 

@@ -11,37 +11,39 @@ import { UserService } from './user.service';
 import { User as UserModel } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
 
-@Controller('signup')
+@Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post('signup')
   async signupUser(@Body() createUserDto: CreateUserDto): Promise<UserModel> {
     return this.userService.createUser(createUserDto);
   }
 
-  // @Post()
-  // async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
-  //   //тут была ошибка вместо User было UserModel
-  //   return this.userService.createUser(createUserDto);
-  // }
+  @Post('signin') // Новый маршрут
+  async signinUser(
+    @Body() body: { email: string; name: string },
+  ): Promise<{ message: string }> {
+    const { email } = body;
 
-  // @Post()
-  // async signupUser(
-  //   @Body() userData: { name?: string; email: string },
-  // ): Promise<UserModel> {
-  //   return this.userService.createUser(userData);
-  // }
+    // Проверяем существование пользователя
+    const user = await this.userService.findByEmail(email);
 
-  @Get()
+    if (!user) {
+      // Если пользователь не найден, выбрасываем ошибку
+      throw new Error(
+        'Такого пользователя нет в базе, нужно зарегистрироваться.',
+      );
+    }
+
+    // Возвращаем успешный ответ
+    return { message: 'Вход выполнен успешно.' };
+  }
+
+  @Get('users')
   async getAllUsers(): Promise<UserModel[]> {
     return this.userService.users({});
   }
 
-  //   @Post()
-  //   async signupUser(
-  //     @Body() userData: { name?: string; email: string },
-  //   ): Promise<UserModel> {
-  //     return this.userService.createUser(userData);
-  //   }
+  
 }

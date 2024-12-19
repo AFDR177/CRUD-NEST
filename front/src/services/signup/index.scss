@@ -1,7 +1,11 @@
 .page_name {
+    max-width: 100%;
+   
     display: flex;
     flex-direction: row;
+
     align-items: flex-start;
     gap: 20px;
+    
     
   }

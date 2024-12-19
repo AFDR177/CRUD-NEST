@@ -10,11 +10,12 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const prisma_service_1 = require("./prisma.service");
-const post_service_1 = require("./post.service");
 const user_module_1 = require("./user/user.module");
 const post_module_1 = require("./post/post.module");
 const comment_module_1 = require("./comment/comment.module");
 const prisma_module_1 = require("./prisma.module");
+const post_service_1 = require("./post/post.service");
+const comments_service_1 = require("./comment/comments.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,7 +28,7 @@ exports.AppModule = AppModule = __decorate([
             post_module_1.PostModule,
             comment_module_1.CommentModule,
         ],
-        providers: [prisma_service_1.PrismaService, post_service_1.PostService],
+        providers: [prisma_service_1.PrismaService, post_service_1.PostService, comments_service_1.CommentsService],
         exports: [prisma_service_1.PrismaService],
     })
 ], AppModule);

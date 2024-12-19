@@ -23,26 +23,41 @@ let UserController = class UserController {
     async signupUser(createUserDto) {
         return this.userService.createUser(createUserDto);
     }
+    async signinUser(body) {
+        const { email } = body;
+        const user = await this.userService.findByEmail(email);
+        if (!user) {
+            throw new Error('Такого пользователя нет в базе, нужно зарегистрироваться.');
+        }
+        return { message: 'Вход выполнен успешно.' };
+    }
     async getAllUsers() {
         return this.userService.users({});
     }
 };
 exports.UserController = UserController;
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)('signup'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "signupUser", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Post)('signin'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "signinUser", null);
+__decorate([
+    (0, common_1.Get)('users'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getAllUsers", null);
 exports.UserController = UserController = __decorate([
-    (0, common_1.Controller)('signup'),
+    (0, common_1.Controller)(),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);
 //# sourceMappingURL=user.controller.js.map

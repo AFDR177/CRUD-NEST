@@ -16,7 +16,7 @@ export class PostController {
 
   @Get('/feed') //Получить все опубликованные посты
   async getPublishedPosts(): Promise<PostModel[]> {
-    console.log('======>getPublishedPosts called');
+    // console.log('======>getPublishedPosts called');
     try {
       return this.postService.posts({
         where: { published: true },

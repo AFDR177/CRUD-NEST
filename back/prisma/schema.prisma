@@ -14,27 +14,28 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement()) 
-  email String  @unique
-  name  String?
-  posts Post[]
-  comments  Comment[]
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  posts     Post[]           // Связь с постами
+  comments  Comment[]        // Связь с комментариями
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())      
+  id        Int       @id @default(autoincrement())
   title     String
   content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
+  published Boolean?  @default(false)
+  author    User?     @relation(fields: [authorId], references: [id])
   authorId  Int?
+  comments  Comment[]        // Связь с комментариями
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())      
-  title     String
+  id        Int      @id @default(autoincrement())
   content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  authorId  Int          // ID пользователя, оставившего комментарий
+  postId    Int          // ID поста, к которому относится комментарий
+  author    User     @relation(fields: [authorId], references: [id])   // Связь с пользователем
+  post      Post     @relation(fields: [postId], references: [id])     // Связь с постом
 }

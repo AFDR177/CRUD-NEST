@@ -7,6 +7,8 @@ import Title from "components/title";
 import PostCreate from "services/post_create";
 import { Post } from "models/type";
 import PostItem from "services/post_item";
+import Box from "components/box";
+import Grid from "components/grid";
 //
 //
 //
@@ -25,24 +27,23 @@ export const PostList: React.FC = () => {
       .catch((error) => console.error("Ошибка при загрузке постов:", error));
   }, []);
 
-  //Добавлени нового постав в список постов
   const handleCreate = (newPost: Post) => {
     console.log("Получен новый пост:", newPost);
     setPosts((prevPosts) => [newPost, ...prevPosts]);
   };
   return (
-    <>
+    <Grid>
+    <Box>
       <Title title="Home" desctiption="Please enter your text" />
-
+      <Grid>
       <div className="postlist">
-        {/* <BackButton /> */}
-
+      
         <PostCreate
           onCreate={handleCreate}
           placeholder="What is happening?!"
           button="Submit"
         />
-        {/* <Fragment> */}
+      
         <div className="postlist__item">
           {posts.map((post: any) => (
             <PostItem
@@ -53,19 +54,12 @@ export const PostList: React.FC = () => {
               authorEmail={post.author?.name || "Unknown Author"}
             />
           )) || []}
-          {/* {data.isEmpty ? (
-            <Alert message="Список постів пустий" />
-          ) : (
-            data.list.map((item) => (
-              <Fragment key={item.id}>
-                <PostItem {...item} />
-              </Fragment>
-            ))
-          )} */}
+          
         </div>
-        {/* </Fragment> */}
       </div>
-    </>
+      </Grid>
+    </Box>
+    </Grid>
   );
 };
 
