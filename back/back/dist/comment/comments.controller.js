@@ -22,9 +22,11 @@ let CommentsController = class CommentsController {
     }
     async createComment(createCommentDto) {
         const { content, authorId, postId } = createCommentDto;
+        console.log('createComment==>', content, authorId, postId);
         return this.commentsService.createComment({ content, authorId, postId });
     }
     async getCommentsByPost(postId) {
+        console.log('postId=====>', postId);
         return this.commentsService.getCommentsByPost(parseInt(postId));
     }
     async deleteComment(id) {

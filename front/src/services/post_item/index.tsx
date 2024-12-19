@@ -1,4 +1,6 @@
+import Box from "components/box";
 import CommentSection from "components/CommentSection";
+import Grid from "components/grid";
 import { PostItemProps } from "models/type";
 import React from "react";
 
@@ -9,13 +11,21 @@ export default function PostItem({
   authorEmail,
 }: PostItemProps) {
   return (
-    <div className="post-item">
-      <h3 className="post-item__title">Title: {title}</h3>
-      <p className="post-item__content">Content: {content}</p>
-      <span className="post-item__author">
-        PostID: {id} | Author: {authorEmail}
-      </span>
-      <CommentSection postId={id} />
-    </div>
+    <Grid>
+      {/* <Box> */}
+      <div className="post-item">
+        <h3 className="post-item__title">
+          {id}. {title}
+        </h3>
+        <Box className="post-item__box">
+          <p className="post-item__content">{content}</p>
+        </Box>
+        <div className="post-item__comment">
+          <span className="post-item__author">{authorEmail}</span>
+          <CommentSection postId={id} />
+        </div>
+      </div>
+      {/* </Box> */}
+    </Grid>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./index.scss"
+import "./index.scss";
 
 interface Comment {
   id: number;
@@ -20,17 +20,25 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
 
   // Загружаем комментарии
   useEffect(() => {
-    fetch(`/comments/post/${postId}`)  // ПРОВЕРИТЬ ПУТЬ!!!!
-      .then((res) => {console.log('Данные комментов из сервера==>' , res ) 
-        return res.json()})
-      .then((data) => {console.log('Data==>' , data ) 
-        return setComments(data)})
-      .catch((error) => console.error("Ошибка при загрузке комментариев", error));
+    fetch(`/comments/post/${postId}`) // ПРОВЕРИТЬ ПУТЬ!!!!
+      .then((res) => {
+        console.log("Данные комментов из сервера==>", res);
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Data==>", data);
+        return setComments(data);
+      })
+      .catch((error) =>
+        console.error("Ошибка при загрузке комментариев", error)
+      );
   }, [postId]);
 
   // Отправка комментария на сервер
   const handleCommentSubmit = () => {
     if (commentContent.trim() && authorName.trim()) {
+      console.log("postId перед отправкой:", postId);
+
       const newComment = {
         content: commentContent,
         postId,
@@ -45,15 +53,19 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
         },
         body: JSON.stringify(newComment),
       })
-        .then((res) => {console.log('Новый коммент из сервера==>' , res ) 
-            return res.json()})
-        .then((data) => { 
+        .then((res) => {
+          console.log("Новый коммент из сервера==>", res);
+          return res.json();
+        })
+        .then((data) => {
           setComments((prev) => [data, ...prev]); // новый комментарий в начало
           setCommentContent("");
           setAuthorName("");
           setShowCommentBox(false);
         })
-        .catch((error) => console.error("Ошибка при отправке комментария", error));
+        .catch((error) =>
+          console.error("Ошибка при отправке комментария", error)
+        );
     }
   };
 
@@ -62,14 +74,21 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
       <div className="comments-list">
         {comments.map((comment) => (
           <div key={comment.id} className="comment-item">
-            <p><strong>{comment.author}</strong>:</p>
+            <p>
+              <strong>{comment.author}</strong>:
+            </p>
             <p>{comment.content}</p>
-            <p><small>{new Date(comment.createdAt).toLocaleString()}</small></p>
+            <p>
+              <small>{new Date(comment.createdAt).toLocaleString()}</small>
+            </p>
           </div>
         ))}
       </div>
 
-      <button onClick={() => setShowCommentBox(!showCommentBox)}>
+      <button
+        onClick={() => setShowCommentBox(!showCommentBox)}
+        className="button__comments click"
+      >
         {showCommentBox ? "Скрыть форму" : "Оставить комментарий"}
       </button>
 

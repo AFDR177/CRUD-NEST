@@ -1,6 +1,6 @@
 import "./index.scss";
 
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { AuthContext } from "../../App";
 import Title from "components/title";
 // import BackButton from "components/back-button";
@@ -33,32 +33,30 @@ export const PostList: React.FC = () => {
   };
   return (
     <Grid>
-    <Box>
-      <Title title="Home" desctiption="Please enter your text" />
-      <Grid>
-      <div className="postlist">
-      
-        <PostCreate
-          onCreate={handleCreate}
-          placeholder="What is happening?!"
-          button="Submit"
-        />
-      
-        <div className="postlist__item">
-          {posts.map((post: any) => (
-            <PostItem
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              content={post.content}
-              authorEmail={post.author?.name || "Unknown Author"}
+      <Box className="box--big">
+        <Title title="Home" desctiption="Please enter your text" />
+        <Grid>
+          <div className="postlist">
+            <PostCreate
+              onCreate={handleCreate}
+              placeholder="What is happening?!"
+              button="Submit"
             />
-          )) || []}
-          
-        </div>
-      </div>
-      </Grid>
-    </Box>
+
+            <div className="postlist__item">
+              {posts.map((post: any) => (
+                <PostItem
+                  key={post.id}
+                  id={post.id}
+                  title={post.title}
+                  content={post.content}
+                  authorEmail={post.author?.name || "Unknown Author"}
+                />
+              )) || []}
+            </div>
+          </div>
+        </Grid>
+      </Box>
     </Grid>
   );
 };

@@ -20,13 +20,23 @@
   
   .comment-form button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #045377;
     color: white;
     border: none;
     cursor: pointer;
   }
   
   .comment-form button:hover {
-    background-color: #0056b3;
+    background-color: #045377;
+  }
+
+  .button__comments {
+    width: fit-content;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #045377;
+
   }
   

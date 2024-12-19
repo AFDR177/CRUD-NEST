@@ -20,7 +20,6 @@ let PostController = class PostController {
         this.postService = postService;
     }
     async getPublishedPosts() {
-        console.log('======>getPublishedPosts called');
         try {
             return this.postService.posts({
                 where: { published: true },

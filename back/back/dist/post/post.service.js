@@ -24,13 +24,6 @@ let PostService = class PostService {
     }
     async posts(params) {
         const { skip, take, cursor, where, orderBy } = params;
-        console.log('=====> Params for posts query:', {
-            skip,
-            take,
-            cursor,
-            where,
-            orderBy,
-        });
         try {
             return this.prisma.post.findMany({
                 skip,
