@@ -50,22 +50,6 @@ export class UserService {
     return this.prisma.user.create({
       data,
     });
-
-    // return this.prisma.user.create({
-    //   data,
-    // });
-
-    // try {
-    //   return this.prisma.user.create({
-    //     data,
-    //   });
-    // } catch (err) {
-    //   if (err.code === 'P2002') {
-    //     console.log('Error TRY!!!!');
-    //     throw new ConflictException('Email already exists');
-    //   }
-    //   throw err;
-    // }
   }
 
   //Обновить польлзователя

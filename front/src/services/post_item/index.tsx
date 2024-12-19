@@ -1,3 +1,4 @@
+import CommentSection from "components/CommentSection";
 import { PostItemProps } from "models/type";
 import React from "react";
 
@@ -14,6 +15,7 @@ export default function PostItem({
       <span className="post-item__author">
         PostID: {id} | Author: {authorEmail}
       </span>
+      <CommentSection postId={id} />
     </div>
   );
 }

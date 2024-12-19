@@ -78,14 +78,14 @@ export default function FormField({
       } else if (location.pathname === "/signin") {
         console.log("enter in signin");
 
-        // submitSignIn();
+        submitSignIn();
       }
     }
   };
 
   const submitSignUp = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/signup`, {
+      const res = await fetch(`/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -129,12 +129,38 @@ export default function FormField({
     }
   };
 
-  //   const convertData = () => {
-  //     return JSON.stringify({
-  //       [EMAIL]: state.formValues[EMAIL],
+  const submitSignIn  = async()=>{
+    try {
+      // Отправляем данные на сервер для входа
+      const res = await fetch("/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: state.formValues[EMAIL],
+          name: state.formValues[NAME_USER],
+        }),
+      });
 
-  //     });
-  //   };
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log("Успешный вход:", data);
+        navigate("/post"); // Переход на страницу /post
+      } else {
+        console.error("Ошибка:", data.message);
+        dispatch({
+          type: ACTION_TYPE.SET_ALERT, // Показываем сообщение в алерте
+          payload: data.message || "Такого пользователя нет в базе, зарегистрируйтесь.",
+        });
+      }
+    } catch (e: any) {
+      console.error("Ошибка при входе:", e.toString());
+      dispatch({
+        type: ACTION_TYPE.SET_ALERT,
+        payload: "Ошибка подключения к серверу. Попробуйте позже.",
+      });
+    }
+  }
 
   return (
     <div className="form">

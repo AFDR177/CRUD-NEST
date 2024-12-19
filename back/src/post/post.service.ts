@@ -29,13 +29,13 @@ export class PostService {
     orderBy?: Prisma.PostOrderByWithRelationInput;
   }): Promise<Post[]> {
     const { skip, take, cursor, where, orderBy } = params;
-    console.log('=====> Params for posts query:', {
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
+    // console.log('=====> Params for posts query:', {
+    //   skip,
+    //   take,
+    //   cursor,
+    //   where,
+    //   orderBy,
+    // });
     try {
       return this.prisma.post.findMany({
         skip,

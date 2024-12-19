@@ -81,3 +81,11 @@ export interface Post {
   content: string;
   authorEmail: string;
 }
+
+export interface Comment {
+  id: number;
+  content: string;
+  postId: number;
+  createdAt: string;
+}
+

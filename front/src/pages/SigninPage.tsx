@@ -1,4 +1,3 @@
-import "../styles/authpage.scss";
 import Page from "components/page";
 
 import React from "react";

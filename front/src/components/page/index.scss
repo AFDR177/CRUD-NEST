@@ -1,12 +1,16 @@
 .page {
+  max-width: 100%;
+  
   display: flex;
   justify-content: center;
-align-items: center;
-max-width: 100%;
-  height: 100%;
-  // margin: 100px;
-    // max-width: 390px;
-    // height: 300px;
-    
+  align-items: center;
   
   }
+.authpage {
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      padding: 30px 20px;
+      // align-content: center;
+    }
