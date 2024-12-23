@@ -20,15 +20,14 @@ let CommentsService = class CommentsService {
         return this.prisma.comment.create({
             data: {
                 content: data.content,
-                authorId: data.authorId,
                 postId: data.postId,
+                author: data.author,
             },
         });
     }
     async getCommentsByPost(postId) {
         return this.prisma.comment.findMany({
             where: { postId },
-            include: { author: { select: { name: true } } },
         });
     }
     async deleteComment(id) {

@@ -1,7 +1,5 @@
 import { FieldForTitleProps } from "models/type";
 import "./index.scss";
-import { NAME_FIELD } from "../../models/const";
-import { useState } from "react";
 
 export default function FieldForTitle({ title, onChange }: FieldForTitleProps) {
   return (

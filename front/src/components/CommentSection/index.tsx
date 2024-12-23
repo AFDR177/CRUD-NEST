@@ -5,7 +5,6 @@ interface Comment {
   id: number;
   content: string;
   author: string;
-  createdAt: string;
 }
 
 interface CommentSectionProps {
@@ -20,7 +19,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
 
   // Загружаем комментарии
   useEffect(() => {
-    fetch(`/comments/post/${postId}`) // ПРОВЕРИТЬ ПУТЬ!!!!
+    fetch(`/comments/post/${postId}`)
       .then((res) => {
         console.log("Данные комментов из сервера==>", res);
         return res.json();
@@ -42,8 +41,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
       const newComment = {
         content: commentContent,
         postId,
-        author: "Alexxx", // пока так для проверки
-        // author: authorName,
+        author: authorName,
+
+        // author: "Alexxx", // пока так для проверки
       };
 
       fetch("/comments", {
@@ -78,9 +78,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
               <strong>{comment.author}</strong>:
             </p>
             <p>{comment.content}</p>
-            <p>
-              <small>{new Date(comment.createdAt).toLocaleString()}</small>
-            </p>
           </div>
         ))}
       </div>
