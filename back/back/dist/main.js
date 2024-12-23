@@ -7,7 +7,11 @@ const class_validator_1 = require("class-validator");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     (0, class_validator_1.useContainer)(app.select(app_module_1.AppModule), { fallbackOnErrors: true });
-    app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
+    app.useGlobalPipes(new common_1.ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+    }));
     const port = process.env.PORT || 4000;
     await app.listen(port);
     console.log(`Server running on http://localhost:${port}`);

@@ -8,14 +8,16 @@ export class CommentsService {
 
   async createComment(data: {
     content: string;
-    authorId: number;
+    // authorId: number;
     postId: number;
+    author: string;
   }): Promise<Comment> {
     return this.prisma.comment.create({
       data: {
         content: data.content,
-        authorId: data.authorId, // Привязка автора через connect
+        // authorId: data.authorId, // Привязка автора через connect
         postId: data.postId, // Привязка поста через connect
+        author: data.author,
       },
     });
   }
@@ -23,7 +25,7 @@ export class CommentsService {
   async getCommentsByPost(postId: number): Promise<Comment[]> {
     return this.prisma.comment.findMany({
       where: { postId },
-      include: { author: { select: { name: true } } },
+      // include: { author: { select: { name: true } } },
     });
   }
 

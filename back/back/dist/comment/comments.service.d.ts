@@ -5,8 +5,8 @@ export declare class CommentsService {
     constructor(prisma: PrismaService);
     createComment(data: {
         content: string;
-        authorId: number;
         postId: number;
+        author: string;
     }): Promise<Comment>;
     getCommentsByPost(postId: number): Promise<Comment[]>;
     deleteComment(id: number): Promise<Comment>;

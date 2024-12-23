@@ -34,7 +34,7 @@ export const PostList: React.FC = () => {
   return (
     <Grid>
       <Box className="box--big">
-        <Title title="Home" desctiption="Please enter your text" />
+        <Title title="Home" desctiption="" />
         <Grid>
           <div className="postlist">
             <PostCreate

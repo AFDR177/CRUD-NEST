@@ -6,19 +6,19 @@ export declare class CommentsController {
     createComment(createCommentDto: CreateCommentDto): Promise<{
         id: number;
         content: string | null;
-        authorId: number;
+        author: string;
         postId: number;
     }>;
     getCommentsByPost(postId: string): Promise<{
         id: number;
         content: string | null;
-        authorId: number;
+        author: string;
         postId: number;
     }[]>;
     deleteComment(id: string): Promise<{
         id: number;
         content: string | null;
-        authorId: number;
+        author: string;
         postId: number;
     }>;
 }

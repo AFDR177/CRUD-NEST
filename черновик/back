@@ -1,0 +1,16 @@
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  posts     Post[]           // Связь с постами
+  comments  Comment[]        // Связь с комментариями
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String?
+  authorId  Int          // ID пользователя, оставившего комментарий
+  postId    Int          // ID поста, к которому относится комментарий
+  author    User     @relation(fields: [authorId], references: [id])   // Связь с пользователем
+  post      Post     @relation(fields: [postId], references: [id])     // Связь с постом
+}
