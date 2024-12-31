@@ -48,13 +48,21 @@ let PostController = class PostController {
         return this.postService.post({ id: Number(id) });
     }
     async createDraft(postData) {
-        const { title, content, authorEmail } = postData;
+        const { title, content, authorEmail, published = false } = postData;
         return this.postService.createPost({
             title,
             content,
+            published,
             author: {
                 connect: { email: authorEmail },
             },
+        });
+    }
+    async upDatePost(postData) {
+        const { title, content, published } = postData;
+        return this.postService.updatePost({
+            where: { id: Number(postData.id) },
+            data: { title, content, published },
         });
     }
     async publishPost(id) {
@@ -96,7 +104,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "createDraft", null);
 __decorate([
-    (0, common_1.Put)('publish/:id'),
+    (0, common_1.Post)('/:id'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], PostController.prototype, "upDatePost", null);
+__decorate([
+    (0, common_1.Put)('/publish/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

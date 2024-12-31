@@ -28,9 +28,9 @@ export const PostList: React.FC = () => {
   }, []);
 
   const handleCreate = (newPost: Post) => {
-    console.log("Получен новый пост:", newPost);
     setPosts((prevPosts) => [newPost, ...prevPosts]);
   };
+
   return (
     <Grid>
       <Box className="box--big">
@@ -50,7 +50,7 @@ export const PostList: React.FC = () => {
                   id={post.id}
                   title={post.title}
                   content={post.content}
-                  authorEmail={post.author?.name || "Unknown Author"}
+                  authorEmail={post.authorName || "Unknown Author"}
                 />
               )) || []}
             </div>

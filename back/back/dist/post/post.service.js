@@ -17,7 +17,6 @@ let PostService = class PostService {
         this.prisma = prisma;
     }
     async post(postWhereUniqueInput) {
-        console.log('=======>PostWhereUniqueInput:', postWhereUniqueInput);
         return this.prisma.post.findUnique({
             where: postWhereUniqueInput,
         });

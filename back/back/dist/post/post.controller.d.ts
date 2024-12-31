@@ -9,7 +9,14 @@ export declare class PostController {
     createDraft(postData: {
         title: string;
         content?: string;
+        published?: boolean;
         authorEmail: string;
+    }): Promise<PostModel>;
+    upDatePost(postData: {
+        id?: number;
+        title: string;
+        content?: string;
+        published?: boolean;
     }): Promise<PostModel>;
     publishPost(id: string): Promise<PostModel>;
     deletePost(id: string): Promise<PostModel>;

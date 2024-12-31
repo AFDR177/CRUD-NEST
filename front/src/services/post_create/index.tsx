@@ -7,73 +7,104 @@ export default function PostCreate({
   placeholder,
   button,
 }: PostCreateProps) {
-  const [draft, setDraft] = useState({ title: "", content: "" }); // для хранения черновика
+  type Draft = {
+    id?: number; // ID может быть undefined, пока сервер его не создаст
+    title: string;
+    content: string;
+    published: boolean;
+    authorName?: string;
+  };
+
+  const [draft, setDraft] = useState<Draft>({
+    title: "",
+    content: "",
+    published: false,
+  }); // для хранения черновика
+
+  const saveOrUpdateDraftOnServer = async (
+    field: string,
+    value: string,
+    published?: boolean
+  ) => {
+    try {
+      let updateDraft;
+      if (!draft.id) {
+        // Если черновик ещё не создан на сервере
+        const response = await fetch("/post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            [field]: value,
+            title: draft.title,
+            content: draft.content,
+            published: false,
+            authorEmail: "alex1@gmail.com",
+          }),
+        });
+
+        const savedDraft = await response.json();
+
+        // Обновляем локальный черновик с новым ID
+        updateDraft = {
+          ...draft,
+          authorName: savedDraft.author.name,
+          id: savedDraft.id,
+          [field]: value,
+        };
+        setDraft(updateDraft);
+      } else {
+        // Если черновик уже существует, обновляем его
+        const response = await fetch(`/post/${draft.id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...draft,
+            [field]: value,
+          }),
+        });
+
+        const updatedData = await response.json();
+
+        updateDraft = {
+          ...updatedData,
+          [field]: value,
+          authorName: draft.authorName,
+        };
+
+        setDraft(updateDraft);
+      }
+    } catch (error) {
+      console.error("Ошибка при создании или обновлении черновика:", error);
+    }
+  };
 
   const handleSubmit = async () => {
+    if (!draft.id) {
+      console.log("Черновик не создан, нечего публиковать");
+      return;
+    }
+
     try {
-      const response = await fetch("/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...draft,
-          authorEmail: "alex@gmail.com",
-        }),
+      const res = await fetch(`post/publish/${draft.id}`, {
+        method: "PUT",
       });
 
-      const newPost = await response.json();
-      onCreate(newPost); // Передаем новый пост в родительский компонент
+      const publishedPost = await res.json();
+      publishedPost.authorName = draft.authorName;
 
-      // Очистка
-      setDraft({ title: "", content: "" });
-    } catch (error) {
-      console.error("Ошибка при создании черновика:", error);
+      onCreate(publishedPost);
+      setDraft({ title: "", content: "", published: false });
+      console.log("очистка draft===>", draft);
+    } catch (err) {
+      console.log("Ошибка публикации поста:", err);
     }
   };
 
   // Обновление черновика
   const updateDraft = (field: string, value: string) => {
     setDraft((prev) => ({ ...prev, [field]: value }));
+    saveOrUpdateDraftOnServer(field, value);
   };
-
-  // const hundleSubmit = (data: {
-  //   // id: number;
-  //   title: string;
-  //   content: string;
-  // }) => {
-  //   console.log("Полученные данные:", data);
-
-  //   //временно добавлю атора, для проверки отправки на сервер
-  //   const dataWithAuthor = {
-  //     ...data,
-  //     authorEmail: "alex@gmail.com",
-  //   };
-
-  //   console.log("Полученные данные с автором:", dataWithAuthor);
-
-  //   fetch("/post", {
-  //     //тут короткий путь для того чтобы обойти CORS через proxy в packege.json
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(dataWithAuthor),
-  //   })
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error("Ошибка при создании поста");
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((newPost) => {
-  //       // console.log("Post created:", newPost);
-  //       // console.log("Post id:", newPost.id);
-
-  //       if (onCreate) {
-  //         onCreate(newPost); // Передача данных в PostList
-  //       }
-  //     })
-  //     .catch((error) => console.error("Error:", error));
-  // };
 
   return (
     <div>

@@ -21,11 +21,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
   useEffect(() => {
     fetch(`/comments/post/${postId}`)
       .then((res) => {
-        console.log("Данные комментов из сервера==>", res);
         return res.json();
       })
       .then((data) => {
-        console.log("Data==>", data);
         return setComments(data);
       })
       .catch((error) =>
@@ -36,8 +34,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
   // Отправка комментария на сервер
   const handleCommentSubmit = () => {
     if (commentContent.trim() && authorName.trim()) {
-      console.log("postId перед отправкой:", postId);
-
       const newComment = {
         content: commentContent,
         postId,
@@ -54,7 +50,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
         body: JSON.stringify(newComment),
       })
         .then((res) => {
-          console.log("Новый коммент из сервера==>", res);
           return res.json();
         })
         .then((data) => {
