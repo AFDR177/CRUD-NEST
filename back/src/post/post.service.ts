@@ -12,8 +12,6 @@ export class PostService {
     //и выдает эту запись (данном случае выдает id Post)
     postWhereUniqueInput: Prisma.PostWhereUniqueInput,
   ): Promise<Post | null> {
-    console.log('=======>PostWhereUniqueInput:', postWhereUniqueInput);
-
     return this.prisma.post.findUnique({
       where: postWhereUniqueInput,
     });
@@ -29,13 +27,7 @@ export class PostService {
     orderBy?: Prisma.PostOrderByWithRelationInput;
   }): Promise<Post[]> {
     const { skip, take, cursor, where, orderBy } = params;
-    // console.log('=====> Params for posts query:', {
-    //   skip,
-    //   take,
-    //   cursor,
-    //   where,
-    //   orderBy,
-    // });
+
     try {
       return this.prisma.post.findMany({
         skip,
@@ -64,6 +56,7 @@ export class PostService {
     data: Prisma.PostUpdateInput;
   }): Promise<Post> {
     const { data, where } = params;
+
     return this.prisma.post.update({
       data,
       where,
@@ -75,22 +68,4 @@ export class PostService {
       where,
     });
   }
-
-  //   post(arg0: { id: number }):
-  //     | {
-  //         content: string | null;
-  //         title: string;
-  //         id: number;
-  //         published: boolean | null;
-  //         authorId: number | null;
-  //       }
-  //     | PromiseLike<{
-  //         content: string | null;
-  //         title: string;
-  //         id: number;
-  //         published: boolean | null;
-  //         authorId: number | null;
-  //       }> {
-  //     throw new Error('Method not implemented.');
-  //   }
 }

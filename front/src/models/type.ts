@@ -60,7 +60,8 @@ export interface FormFieldPostProps {
 }
 
 export interface FieldForTitleProps {
-  title: boolean;
+  titleField: boolean;
+  value: string;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -76,7 +77,6 @@ export interface PostItemProps {
 export interface Post {
   id: number;
   author: { name: string; email: string };
-
   title: string;
   content: string;
   authorEmail: string;
@@ -88,4 +88,3 @@ export interface Comment {
   postId: number;
   createdAt: string;
 }
-

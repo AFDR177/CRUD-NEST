@@ -1,10 +1,14 @@
 import { FieldForTitleProps } from "models/type";
 import "./index.scss";
 
-export default function FieldForTitle({ title, onChange }: FieldForTitleProps) {
+export default function FieldForTitle({
+  titleField,
+  value,
+  onChange,
+}: FieldForTitleProps) {
   return (
     <div className="form">
-      {title ? (
+      {titleField ? (
         <div className="form__item">
           <label htmlFor="title" className="field__label">
             Title:
@@ -12,6 +16,7 @@ export default function FieldForTitle({ title, onChange }: FieldForTitleProps) {
           <input
             id="title"
             type="text"
+            value={value}
             placeholder="Enter title post"
             className="field__input"
             onChange={onChange} // Вызываем onChange родительского компонента

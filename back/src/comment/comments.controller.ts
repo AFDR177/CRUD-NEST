@@ -8,17 +8,13 @@ export class CommentsController {
 
   @Post()
   async createComment(@Body() createCommentDto: CreateCommentDto) {
-    console.log('Тело запроса:', createCommentDto);
-
     const { content, postId, author } = createCommentDto;
 
-    console.log('createComment==>', content, postId, author);
     return this.commentsService.createComment({ content, postId, author });
   }
 
   @Get('post/:postId')
   async getCommentsByPost(@Param('postId') postId: string) {
-    console.log('postId=====>', postId);
     return this.commentsService.getCommentsByPost(parseInt(postId));
   }
 

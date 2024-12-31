@@ -1,0 +1,61 @@
+30.12.24 10:30
+в PostCreate 
+сначала объявляю хук состояни useState для объекта "Черновик" 
+{
+    title: "",
+    content: "",
+    published: false,
+  }
+
+  затем объявляю функцию сохранения и обновления черновика saveOrUpdateDraftOnServer
+    тут внчале проверяю есть ли id поста
+        if (!draft.id) 
+            если нет то отправляю запрос на сервер в контроллер по методу POST
+            чтоб создать новый черновик в БД
+
+            далее получаем данные с серввера для фронта --> savedDraft
+            далее обновляем локальный черновик  --> updateDraft
+        Если черноновик уже есть, то есть !draft.id = false
+            тогда нужно отправить запрос в контроллер для обновления существующего черновика.
+            ////?????????
+            нужно правильно отправить данные тут:
+             const response = await fetch(`/post/${draft.id}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...draft,
+            [field]: value,
+          }),
+        });
+
+         и правильно принять их в контроллере - !!!!
+         @Post('/:id')
+            async upDatePost(
+             @Body() // - получаю тело запроса с задаными параметрами
+            postData: {
+                id?: number;
+                title: string;
+                content?: string;
+                published?: boolean;
+                authorEmail: string;
+             },
+            ): Promise<PostModel> {
+             console.log('postData в upDatePost в контроллере ==>', postData);
+
+            const { title, content, published } = postData; //достаю нужные мне параметры из postData
+
+        return this.postService.updatePost({
+        where: { id: Number(postData.id) },
+        data: { title, content, published }, // вкладываю их в метод обновления на сервисе
+        });
+        }
+         //!!!!! --  ИСПРАВЛЕНО!!!
+
+         ПРОБЛЕМА: не отображаеться автор поста
+         в post_list в  posts выводит такой объект:
+         {authorId: 7, content: "текст", id: 47, published: true, title: "Тема"}
+         но в выводе в пропсах стоит authorEmail={post.author?.name || "Unknown Author"}
+
+         получается что в объекте posts нет свойства author а есть свойство authorId.
+
+         НУЖНО либо в объект posts добавить author либо из authorId вытащтиь имя автора

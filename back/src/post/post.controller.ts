@@ -16,7 +16,6 @@ export class PostController {
 
   @Get('/feed') //Получить все опубликованные посты
   async getPublishedPosts(): Promise<PostModel[]> {
-    // console.log('======>getPublishedPosts called');
     try {
       return this.postService.posts({
         where: { published: true },
@@ -52,20 +51,44 @@ export class PostController {
 
   @Post()
   async createDraft(
-    @Body() postData: { title: string; content?: string; authorEmail: string },
+    @Body()
+    postData: {
+      title: string;
+      content?: string;
+      published?: boolean;
+      authorEmail: string;
+    },
   ): Promise<PostModel> {
-    // console.log('===>postData', postData);
-    const { title, content, authorEmail } = postData;
+    const { title, content, authorEmail, published = false } = postData;
     return this.postService.createPost({
       title,
       content,
+      published,
       author: {
         connect: { email: authorEmail },
       },
     });
   }
 
-  @Put('publish/:id') //Опубликовать пост его id
+  @Post('/:id')
+  async upDatePost(
+    @Body()
+    postData: {
+      id?: number;
+      title: string;
+      content?: string;
+      published?: boolean;
+    },
+  ): Promise<PostModel> {
+    const { title, content, published } = postData;
+
+    return this.postService.updatePost({
+      where: { id: Number(postData.id) },
+      data: { title, content, published },
+    });
+  }
+
+  @Put('/publish/:id') //Опубликовать пост его id
   async publishPost(@Param('id') id: string): Promise<PostModel> {
     return this.postService.updatePost({
       where: { id: Number(id) },
